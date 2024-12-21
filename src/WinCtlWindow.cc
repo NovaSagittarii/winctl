@@ -207,10 +207,10 @@ void Window::getMonitor(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	Nan::Set(result, Nan::New("primary").ToLocalChecked(), Nan::New(isPrimary));
 
 	v8::Local<v8::Object> dim = Nan::New<v8::Object>();
-	Nan::Set(dim, Nan::New("left").ToLocalChecked(), Nan::New(mi.rcMonitor.left));
-	Nan::Set(dim, Nan::New("top").ToLocalChecked(), Nan::New(mi.rcMonitor.top));
-	Nan::Set(dim, Nan::New("right").ToLocalChecked(), Nan::New(mi.rcMonitor.right));
-	Nan::Set(dim, Nan::New("bottom").ToLocalChecked(), Nan::New(mi.rcMonitor.bottom));
+	Nan::Set(dim, Nan::New("left").ToLocalChecked(), Nan::New<v8::Number>(mi.rcMonitor.left));
+	Nan::Set(dim, Nan::New("top").ToLocalChecked(), Nan::New<v8::Number>(mi.rcMonitor.top));
+	Nan::Set(dim, Nan::New("right").ToLocalChecked(), Nan::New<v8::Number>(mi.rcMonitor.right));
+	Nan::Set(dim, Nan::New("bottom").ToLocalChecked(), Nan::New<v8::Number>(mi.rcMonitor.bottom));
 
 	Nan::Set(result, Nan::New("dimensions").ToLocalChecked(), dim);
 
@@ -300,9 +300,9 @@ void Window::dimensions(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	GetWindowRect(obj->windowHandle, &dim);
 
 	v8::Local<v8::Object> result = Nan::New<v8::Object>();
-	Nan::Set(result, Nan::New("left").ToLocalChecked(), Nan::New(dim.left));
-	Nan::Set(result, Nan::New("top").ToLocalChecked(), Nan::New(dim.top));
-	Nan::Set(result, Nan::New("right").ToLocalChecked(), Nan::New(dim.right));
-	Nan::Set(result, Nan::New("bottom").ToLocalChecked(), Nan::New(dim.bottom));
+	Nan::Set(result, Nan::New("left").ToLocalChecked(), Nan::New<v8::Number>(dim.left));
+	Nan::Set(result, Nan::New("top").ToLocalChecked(), Nan::New<v8::Number>(dim.top));
+	Nan::Set(result, Nan::New("right").ToLocalChecked(), Nan::New<v8::Number>(dim.right));
+	Nan::Set(result, Nan::New("bottom").ToLocalChecked(), Nan::New<v8::Number>(dim.bottom));
 	info.GetReturnValue().Set(result);
 }
