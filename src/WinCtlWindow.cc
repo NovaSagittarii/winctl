@@ -72,7 +72,7 @@ void Window::GetWindowByClassName(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::String::Utf8Value classname(isolate, info[0]);
 	std::string sClassname(*classname);
 
-	HWND fgWin = FindWindowEx(0, 0, sClassname.c_str(), 0);
+	HWND fgWin = FindWindowExA(0, 0, sClassname.c_str(), 0);
 
 	const int argc = 1;
 	v8::Local<v8::Value> argv[1] = {Nan::New((int)fgWin)};
@@ -87,7 +87,7 @@ void Window::GetWindowByTitleExact(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::String::Utf8Value exactTitle(isolate, info[0]);
 	std::string sExactTitle = std::string(*exactTitle);
 
-	HWND fgWin = FindWindow(NULL, sExactTitle.c_str());
+	HWND fgWin = FindWindowA(NULL, sExactTitle.c_str());
 
 	const int argc = 1;
 	v8::Local<v8::Value> argv[1] = {Nan::New((int)fgWin)};
@@ -144,7 +144,7 @@ void Window::getTitle(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	Window* obj = Nan::ObjectWrap::Unwrap<Window>(info.This());
 
 	char wnd_title[256];
-	GetWindowText(obj->windowHandle, wnd_title, sizeof(wnd_title));
+	GetWindowTextA(obj->windowHandle, wnd_title, sizeof(wnd_title));
 
 	info.GetReturnValue().Set(Nan::New(wnd_title).ToLocalChecked());
 }
@@ -160,7 +160,7 @@ void Window::getClassName(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	Window* obj = Nan::ObjectWrap::Unwrap<Window>(info.This());
 
 	char wnd_cn[256];
-	GetClassName(obj->windowHandle, wnd_cn, sizeof(wnd_cn));
+	GetClassNameA(obj->windowHandle, wnd_cn, sizeof(wnd_cn));
 
 	info.GetReturnValue().Set(Nan::New(wnd_cn).ToLocalChecked());
 }
@@ -203,8 +203,8 @@ void Window::getMonitor(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 
 	v8::Local<v8::Object> result = Nan::New<v8::Object>();
 	bool isPrimary = mi.dwFlags & MONITORINFOF_PRIMARY;
-	Nan::Set(result, Nan::New("name").ToLocalChecked(), Nan::New(mi.szDevice).ToLocalChecked());
-	Nan::Set(result, Nan::New("primary").ToLocalChecked(), Nan::New(isPrimary));
+	Nan::Set(result, Nan::New("name").ToLocalChecked(), Nan::New<v8::String>(mi.szDevice).ToLocalChecked());
+	Nan::Set(result, Nan::New("primary").ToLocalChecked(), Nan::New<v8::Boolean>(isPrimary));
 
 	v8::Local<v8::Object> dim = Nan::New<v8::Object>();
 	Nan::Set(dim, Nan::New("left").ToLocalChecked(), Nan::New<v8::Number>(mi.rcMonitor.left));
