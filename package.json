@@ -2,16 +2,22 @@
   "name": "winctl",
   "version": "1.0.2",
   "description": "",
-  "main": "index.js",
+  "source": "src/index.ts",
+  "main": "./dist/index.js",
   "scripts": {
     "configure": "node-gyp configure",
-    "build": "node-gyp build"
+    "install": "npm run build",
+    "build": "tsc && node-gyp rebuild"
   },
+  "types": "./dist/index.d.ts",
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bindings": "^1.5.5",
+    "@types/node": "^22.10.2",
     "nan": "^2.22.0",
-    "node-gyp": "^11.0.0"
+    "node-gyp": "^11.0.0",
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "bindings": "^1.2.1"
